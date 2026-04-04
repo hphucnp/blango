@@ -15,8 +15,6 @@ row "mt-4" %} {% col %}
 <h4>Add Comment</h4>
 <form method="post">
   {% csrf_token %} {{ comment_form.as_p }}
-  <p>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </p>
+  <p><button type="submit" class="btn btn-primary">Submit</button></p>
 </form>
 {% endcol %} {% endrow %} {% endif %}
