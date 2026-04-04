@@ -7,14 +7,15 @@ from blog.models import Post
 
 # Create your views here.
 def index(request):
-    return render(request, 'blog/index.html')
+    posts = Post.objects.all()
+    return render(request, 'blog/index.html', {'posts': posts})
 
 
 def post_detail(request, slug):
     # post = get_object_or_404(Post, slug=slug)
     # return render(request, 'blog/post-detail.html', {'post': post})
     post = get_object_or_404(Post, slug=slug)
-    if request.user.is_active:
+    if request.user.is_authenticated:
         if request.method == "POST":
             comment_form = CommentForm(request.POST)
 
