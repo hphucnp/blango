@@ -1,8 +1,19 @@
 from django import template
 from django.contrib.auth.management.commands.changepassword import UserModel
-from django.utils.html import mark_safe
+from django.utils.html import escape, format_html, mark_safe
 
 register = template.Library()
+
+
+@register.filter
+def full_name(user):
+    first_name = user.first_name
+    last_name = user.last_name
+
+    if not last_name:
+        return escape(first_name)
+
+    return format_html("<em>{}</em>, {}", first_name, last_name)
 
 
 @register.filter

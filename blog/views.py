@@ -1,6 +1,8 @@
 
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404, redirect, render
 
+from assessment.models import Thing
 from blog.forms import CommentForm
 from blog.models import Post
 
@@ -9,6 +11,26 @@ from blog.models import Post
 def index(request):
     posts = Post.objects.all()
     return render(request, 'blog/index.html', {'posts': posts})
+
+
+def question2(request):
+    return render(request, 'question2.html')
+
+
+def question4(request):
+    user_model = get_user_model()
+    owner, _ = user_model.objects.get_or_create(
+        username='question4-owner',
+        defaults={'first_name': 'Question', 'last_name': 'Owner'},
+    )
+    thing, _ = Thing.objects.get_or_create(name='Question 4 Thing', owner=owner)
+
+    if not thing.comments.exists():
+        thing.comments.create(content='Zulu')
+        thing.comments.create(content='Alpha')
+        thing.comments.create(content='Bravo')
+
+    return render(request, 'question4.html', {'thing': thing})
 
 
 def post_detail(request, slug):
