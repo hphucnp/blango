@@ -6,7 +6,11 @@ from django.db import models
 
 class Comment(models.Model):
     content = models.TextField()
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.CASCADE,
+        related_name='assessment_comments',
+    )
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey("content_type", "object_id")
 
